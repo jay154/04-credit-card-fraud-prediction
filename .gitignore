@@ -1,0 +1,39 @@
+# Byte-compiled / optimized
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Jupyter
+.ipynb_checkpoints/
+.virtual_documents/
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# Environments / secrets
+.env
+
+# Packaging / build
+build/
+dist/
+*.egg-info/
+
+# Tool caches
+.ruff_cache/
+.pytest_cache/
+.mypy_cache/
+
+# Editors
+.idea/
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Raw dataset (reproduced by notebooks/01_eda.ipynb, not committed)
+data/raw/*
+!data/raw/.gitkeep

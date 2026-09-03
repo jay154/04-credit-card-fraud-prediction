@@ -1,0 +1,17 @@
+# Core data / viz
+pandas==3.0.5
+numpy==2.5.2
+seaborn==0.13.2
+matplotlib==3.11.1
+
+# Modeling
+scikit-learn==1.9.0
+imbalanced-learn==0.14.2
+xgboost==3.4.1
+
+# App + notebooks
+streamlit==1.63.0
+jupyter==1.1.1
+
+# Dataset download (Phase 1)
+requests==2.34.2
