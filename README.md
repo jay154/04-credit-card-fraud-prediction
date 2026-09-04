@@ -6,7 +6,7 @@ Streamlit app that scores a single transaction. It is built MVP-first. The aim i
 a correct, reproducible pipeline from raw download to a working demo, not a tuned
 model or a competition score.
 
-**Live demo:** _add the Streamlit Community Cloud URL here after deploying_
+**Live demo:** https://04-credit-card-fraud-prediction-4dmawt5wg3ewxegyazumbk.streamlit.app
 
 ## Data
 
@@ -98,12 +98,11 @@ jupyter nbconvert --to notebook --execute --inplace notebooks/04_reporting.ipynb
 
 ## Deploy
 
-The app is deployable to [Streamlit Community Cloud](https://share.streamlit.io)
-as-is: `requirements.txt` is the app runtime only, `packages.txt` pulls in
+Deployed to [Streamlit Community Cloud](https://share.streamlit.io) from `app.py`
+on `main`. `requirements.txt` is the app runtime only, `packages.txt` pulls in
 `libgomp1` for XGBoost, and `models/fraud_model_v1.pkl` plus
 `data/sample_transactions.parquet` (a 300-row stratified sample) are committed so
-the sample picker works without the full dataset. Point a new app at `app.py` on
-the `main` branch.
+the sample picker works without the full dataset.
 
 ## Methods considered and future work
 
