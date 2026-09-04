@@ -1,21 +1,9 @@
-# Core data / viz
+# Runtime dependencies for app.py (this is what Streamlit Community Cloud installs).
+# For the notebooks, install requirements-dev.txt instead.
+streamlit==1.63.0
 pandas==3.0.5
 numpy==2.5.2
-seaborn==0.13.2
-matplotlib==3.11.1
-
-# Modeling
 scikit-learn==1.9.0
-imbalanced-learn==0.14.2
 xgboost==3.4.1
 joblib==1.6.0
-
-# Parquet engine for the data/processed cache
 pyarrow==25.0.1
-
-# App + notebooks
-streamlit==1.63.0
-jupyter==1.1.1
-
-# Dataset download (Phase 1)
-requests==2.34.2

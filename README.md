@@ -6,6 +6,8 @@ Streamlit app that scores a single transaction. It is built MVP-first. The aim i
 a correct, reproducible pipeline from raw download to a working demo, not a tuned
 model or a competition score.
 
+**Live demo:** _add the Streamlit Community Cloud URL here after deploying_
+
 ## Data
 
 The [Capital One Data Science recruiting dataset](https://github.com/CapitalOneRecruiting/DS)
@@ -74,24 +76,34 @@ transactions.
 ```
 py -3 -m venv .venv
 .venv\Scripts\activate
+```
+
+Just the app (uses the committed model and sample):
+
+```
 pip install -r requirements.txt
+streamlit run app.py
 ```
 
-Run the notebooks in order (`01` downloads about 30 MB and writes a ~600 MB
-extracted file to `data/raw/`):
+The notebooks as well (`01` downloads ~30 MB and writes a ~600 MB extracted file
+to `data/raw/`):
 
 ```
+pip install -r requirements-dev.txt
 jupyter nbconvert --to notebook --execute --inplace notebooks/01_eda.ipynb
 jupyter nbconvert --to notebook --execute --inplace notebooks/02_data_wrangling.ipynb
 jupyter nbconvert --to notebook --execute --inplace notebooks/03_modeling.ipynb
 jupyter nbconvert --to notebook --execute --inplace notebooks/04_reporting.ipynb
 ```
 
-Then run the demo:
+## Deploy
 
-```
-streamlit run app.py
-```
+The app is deployable to [Streamlit Community Cloud](https://share.streamlit.io)
+as-is: `requirements.txt` is the app runtime only, `packages.txt` pulls in
+`libgomp1` for XGBoost, and `models/fraud_model_v1.pkl` plus
+`data/sample_transactions.parquet` (a 300-row stratified sample) are committed so
+the sample picker works without the full dataset. Point a new app at `app.py` on
+the `main` branch.
 
 ## Methods considered and future work
 
@@ -103,16 +115,20 @@ Covered in full in `notebooks/04_reporting.ipynb`. In short:
 - **Threshold:** picked by maximising F1 on a validation split. A cost-based
   threshold would be better.
 - **Next:** per-account behavioural features, bring back `merchantName` with
-  target encoding, compare imbalance strategies, k-fold tuning, probability
-  calibration, and deploy the app to Streamlit Community Cloud.
+  target encoding, compare imbalance strategies, k-fold tuning, and probability
+  calibration.
 
 ## Layout
 
 ```
-data/            raw/ (gitignored download) and processed/ (gitignored dedup output)
+data/            raw/ + processed/ (both gitignored, rebuilt by the notebooks)
+                 sample_transactions.parquet (committed 300-row demo sample)
 notebooks/       01 EDA, 02 wrangling, 03 modeling, 04 reporting
 features.py      shared feature engineering
 models/          fraud_model_v1.pkl (pipeline + threshold + metrics)
 reports/figures/ exported performance charts
 app.py           Streamlit demo
+requirements.txt        app runtime deps
+requirements-dev.txt    + notebook/tooling deps
+packages.txt            apt package for the Streamlit Cloud build (libgomp1)
 ```

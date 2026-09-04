@@ -1,0 +1,8 @@
+# Full environment for running the notebooks (01-04). Includes the app runtime.
+-r requirements.txt
+
+jupyter==1.1.1
+matplotlib==3.11.1
+seaborn==0.13.2
+imbalanced-learn==0.14.2
+requests==2.34.2

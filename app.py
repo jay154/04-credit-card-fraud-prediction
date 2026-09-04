@@ -22,7 +22,10 @@ from features import build_features
 
 REPO_ROOT = Path(__file__).parent
 MODEL_PATH = REPO_ROOT / "models" / "fraud_model_v1.pkl"
+# Full deduped dataset when it exists locally; otherwise the small committed
+# sample, which is what a fresh clone or the Streamlit Cloud deploy has.
 PROCESSED_PATH = REPO_ROOT / "data" / "processed" / "transactions_deduped.parquet"
+SAMPLE_PATH = REPO_ROOT / "data" / "sample_transactions.parquet"
 
 # Category options, so the manual form works even without the dataset on disk.
 CATEGORY_OPTIONS = {
@@ -54,9 +57,13 @@ def load_model() -> dict:
 
 @st.cache_data
 def load_samples(n: int = 300) -> pd.DataFrame | None:
-    if not PROCESSED_PATH.exists():
+    if PROCESSED_PATH.exists():
+        df = pd.read_parquet(PROCESSED_PATH)
+    elif SAMPLE_PATH.exists():
+        # Already a small stratified sample; use it as-is.
+        return pd.read_parquet(SAMPLE_PATH).reset_index(drop=True)
+    else:
         return None
-    df = pd.read_parquet(PROCESSED_PATH)
     # A small mix that is mostly legit with some fraud, so the picker shows both.
     fraud = df[df["isFraud"]].sample(min(n // 3, int(df["isFraud"].sum())), random_state=0)
     legit = df[~df["isFraud"]].sample(n - len(fraud), random_state=0)
@@ -114,8 +121,9 @@ samples = load_samples()
 if mode == "Pick a sample transaction":
     if samples is None:
         st.info(
-            "Sample data not found. Run notebooks 01 and 02 to build "
-            "`data/processed/transactions_deduped.parquet`, or use manual entry."
+            "Sample data not found. Expected `data/sample_transactions.parquet` "
+            "(committed) or the full `data/processed/transactions_deduped.parquet` "
+            "from notebooks 01-02. Use manual entry instead."
         )
     else:
         labels = [
