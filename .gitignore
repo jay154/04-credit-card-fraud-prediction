@@ -34,6 +34,10 @@ dist/
 .DS_Store
 Thumbs.db
 
-# Raw dataset (reproduced by notebooks/01_eda.ipynb, not committed)
+# Datasets are rebuilt from the notebooks, not committed:
+#   data/raw/*        <- downloaded by notebooks/01_eda.ipynb
+#   data/processed/*  <- written by notebooks/02_data_wrangling.ipynb
 data/raw/*
 !data/raw/.gitkeep
+data/processed/*
+!data/processed/.gitkeep
