@@ -8,6 +8,10 @@ matplotlib==3.11.1
 scikit-learn==1.9.0
 imbalanced-learn==0.14.2
 xgboost==3.4.1
+joblib==1.6.0
+
+# Parquet engine for the data/processed cache
+pyarrow==25.0.1
 
 # App + notebooks
 streamlit==1.63.0
